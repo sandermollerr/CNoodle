@@ -5,3 +5,4 @@ example_history
 result
 history
 geckodriver.log
+__pycache__
