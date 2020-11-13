@@ -2,3 +2,6 @@ venv
 old
 .idea
 example_history
+result
+history
+geckodriver.log

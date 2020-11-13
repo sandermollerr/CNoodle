@@ -1,3 +1,4 @@
+import os
 import time
 import requests
 from bs4 import BeautifulSoup
@@ -78,6 +79,9 @@ def read_data_from_moodle_into_file(course_links):
     file_name = str(datetime.datetime.now())
     file_name = file_name.strip().replace(" ", "_").replace("-", "_").replace(":", "_")[:file_name.index(".")]
 
+    if not os.path.isdir('./history'):
+        os.mkdir('./history')
+
     with open("./history/{}.txt".format(file_name), "w", encoding="UTF-8") as output_file:
 
         # Iterates over all courses links
@@ -122,6 +126,10 @@ def read_data_from_moodle_into_file(course_links):
 
 
 def compare_files(newer_file, older_file):
+
+    if not os.path.isdir('./result'):
+        os.mkdir('./result')
+
     with open(".\\result\\result.txt", "w", encoding="UTF-8") as output_file:
         with open(newer_file, "r", encoding="UTF-8") as new, open(older_file, "r", encoding="UTF-8") as old:
             new_data = new.readlines()

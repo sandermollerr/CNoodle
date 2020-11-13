@@ -1277,3 +1277,33 @@ console.warn: SearchSettings: "get: No settings file exists, new profile?" (new 
 
 ###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
 
+1605272971110	geckodriver	INFO	Listening on 127.0.0.1:56892
+1605272974163	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\mollersa\\AppData\\Local\\Temp\\rust_mozprofilemRvNG6"
+Can't find symbol 'eglSwapBuffersWithDamageEXT'.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1605272976314	Marionette	INFO	Listening on port 56900
+1605272976836	Marionette	WARN	TLS certificate errors will be ignored for this session
+1605273009095	Marionette	INFO	Stopped listening on port 56900
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
+1605273074118	geckodriver	INFO	Listening on 127.0.0.1:57042
+1605273077199	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\mollersa\\AppData\\Local\\Temp\\rust_mozprofileRlXPXs"
+Can't find symbol 'eglSwapBuffersWithDamageEXT'.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new Error("", "(unknown module)"))
+1605273079212	Marionette	INFO	Listening on port 57050
+1605273079239	Marionette	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: https://moodle.ut.ee/lib/javascript.php/1604998261/lib/requirejs/require.min.js, line 5: Error: Script error for "core/event"
+http://requirejs.org/docs/errors.html#scripterror
+1605273111634	Marionette	INFO	Stopped listening on port 57050
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][MessageChannel::SendAndWait] Error: Channel error: cannot send/recv
+
