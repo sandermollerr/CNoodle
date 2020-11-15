@@ -5,6 +5,7 @@ root: any
 email_input: any
 password_input: any
 submit_button: any
+user_information: list
 # has_packed_widgets = False
 
 
@@ -62,7 +63,7 @@ def pack_all_widgets():
     # has_packed_widgets = True
 
 
-def get_user_login_info():
+def user_login_window():
     # Window settings
     global root
     root = Tk()
@@ -97,7 +98,12 @@ def get_user_login_info():
 
     submit_button.bind('<Button-1>', check_input_fields)
     root.mainloop()
-    return [email, password]
+    global user_information
+    user_information = [email, password]
+
+
+def get_user_information():
+    return user_information
 
 
 def show_compared_results(result_file_name):
