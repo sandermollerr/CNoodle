@@ -25,7 +25,7 @@ def open_browser_with_driver():
 
 
 def get_login_status(username, password):
-    # Logging into Moodle
+    # Entering credentials to input fields
     browser.find_element_by_id("i0116").send_keys(username)
     browser.find_element_by_id("i0116").send_keys(Keys.ENTER)
 
@@ -33,9 +33,8 @@ def get_login_status(username, password):
     time.sleep(1)
     browser.find_element_by_id("i0118").send_keys(Keys.ENTER)
     time.sleep(3)
-    # invalid email: buid
-    # invalid password: esctx
-    # logged in: __utmc
+
+    # Returns status code
     return browser.get_cookies()[0]["name"]
 
 
@@ -50,6 +49,7 @@ def get_course_links():
     for course in courses:
         course_links.append(course.get_attribute("href"))
 
+    # Storing session cookies for later use
     global session_cookies
     session_cookies = browser.get_cookies()
     browser.close()
@@ -70,7 +70,7 @@ def read_data_from_moodle_into_file(course_links):
     session = requests.session()
     session.headers.update(headers)
 
-    # Syncs all cookies between selenium driver and requests session
+    # Syncs all cookies between selenium driver session and requests session
     for cookie in session_cookies:
         c = {cookie['name']: cookie['value']}
         session.cookies.update(c)
@@ -79,6 +79,7 @@ def read_data_from_moodle_into_file(course_links):
     file_name = str(datetime.datetime.now())
     file_name = file_name.strip().replace(" ", "_").replace("-", "_").replace(":", "_")[:file_name.index(".")]
 
+    # Checks if history directory exists and if doesn't creates one
     if not os.path.isdir('./history'):
         os.mkdir('./history')
 
@@ -126,11 +127,13 @@ def read_data_from_moodle_into_file(course_links):
 
 
 def compare_files(newer_file, older_file):
-
+    # Checks if result directory exists and if doesn't creates one
     if not os.path.isdir('./result'):
         os.mkdir('./result')
 
+    # Creates and opens result.txt file for writing compared information
     with open(".\\result\\result.txt", "w", encoding="UTF-8") as output_file:
+        # Opens two files to find their differences
         with open(newer_file, "r", encoding="UTF-8") as new, open(older_file, "r", encoding="UTF-8") as old:
             new_data = new.readlines()
             old_data = old.readlines()
@@ -138,6 +141,7 @@ def compare_files(newer_file, older_file):
             course_name_new = ""
             course_name_old = ""
             for new_value in new_data:
+                # Checks if dealing with course heading
                 if new_value[:2] == "->":
                     print(new_value.strip())
                     output_file.write(new_value.strip() + "\n")
@@ -150,6 +154,8 @@ def compare_files(newer_file, older_file):
                     if old_value[:2] == "->":
                         course_name_old = old_value.strip()
                         continue
+
+                    # Statement prevents comparing tests with same name from different courses
                     if course_name_old == course_name_new:
                         old_value_data = old_value.strip().split(";")
                         old_title, old_result, old_result_range = old_value_data[0], old_value_data[1], old_value_data[
@@ -161,6 +167,8 @@ def compare_files(newer_file, older_file):
                                 output_file.write("{};{};{}\n".format(new_title, new_result, old_result))
                                 break
                             break
+
+                # If new test is found
                 if not found_new_title:
                     print("{};{};{}".format(new_title, new_result, "-"))
                     output_file.write("{};{};{}\n".format(new_title, new_result, "-"))
