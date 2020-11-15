@@ -1,12 +1,26 @@
 from login import *
 from gui import *
 import glob
+import threading
 
 if __name__ == '__main__':
-    open_browser_with_driver()
+    webdriver_thread = threading.Thread(target=open_browser_with_driver)
+    login_thread = threading.Thread(target=user_login_window)
+
+    webdriver_thread.start()
+    login_thread.start()
+
+    webdriver_thread.join()
+    login_thread.join()
+
+    is_first_run = True
+
     while True:
+        if not is_first_run:
+            user_login_window()
         navigate_to_login_page()
-        user_information = get_user_login_info()
+
+        user_information = get_user_information()
         status = get_login_status(user_information[0], user_information[1])
 
         # Different status codes:
