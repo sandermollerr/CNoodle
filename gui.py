@@ -5,7 +5,7 @@ root: any
 email_input: any
 password_input: any
 submit_button: any
-has_packed_widgets = False
+# has_packed_widgets = False
 
 
 def pack_all_widgets():
@@ -58,8 +58,8 @@ def pack_all_widgets():
     remember_login_information.pack()
 
     submit_button.pack()
-    global has_packed_widgets
-    has_packed_widgets = True
+    # global has_packed_widgets
+    # has_packed_widgets = True
 
 
 def get_user_login_info():
@@ -76,7 +76,7 @@ def get_user_login_info():
 
     pack_all_widgets()
 
-    def check(event):
+    def check_input_fields(event):
         user_email = email_input.get()
         user_password = password_input.get()
 
@@ -95,43 +95,12 @@ def get_user_login_info():
         if not user_email and not user_password:
             messagebox.showerror('Error 1x1', 'Sisestage login ja salasõna')
 
-    submit_button.bind('<Button-1>', check)
+    submit_button.bind('<Button-1>', check_input_fields)
     root.mainloop()
     return [email, password]
 
 
-def destroy_root():
-    root.destroy()
-
-
-def lugemine(comparison_result):
-    f = open(comparison_result, encoding="utf8")
-    course_name = f.readline().strip().replace("->", "")
-    i = 0
-    test = ""
-    vastus = ""
-    for line in f:
-
-        if line[0] == "=":
-            line = line.strip().replace("=>", "").split(";")
-            test_name = line[0]
-            test_mark = line[1]
-            test_max = line[2]
-            test += "Test " + str(test_name) + ", hinne " + str(test_mark) + ", vehemik " + str(test_max) + "\n"
-            i = 1
-        elif line[0] == "-" and i == 1:
-            vastus += course_name + "\n"
-            vastus += test + "\n"
-            test = ""
-
-        if line[0] == "-":
-            course_name = line.strip().replace("->", "")
-            i = 0
-
-    return vastus
-
-
-def tulemused(comparison_result):
+def show_compared_results(result_file_name):
     # Window settings
     result_window = Tk()
 
@@ -141,21 +110,45 @@ def tulemused(comparison_result):
     result_window.wm_attributes('-alpha', 0.9)
     result_window['bg'] = '#8ac5de'
 
-    # Event
-    hello = Label(result_window, text="Hello",
-                  font='Comfortaa 20',
-                  fg="#fff",
-                  bg='#8ac5de', )
+    heading = Label(result_window, text="Hello",
+                    font='Comfortaa 20',
+                    fg="#fff",
+                    bg='#8ac5de', )
 
-    d = lugemine(comparison_result)
-    tekst = Label(result_window, text=d,
-                  font="Conssolas 10",
-                  fg="#fff",
-                  bg='#8ac5de'
-                  )
+    def format_data_from_result_file():
+        result_file = open(result_file_name, encoding="utf8")
+        course_name = result_file.readline().strip().replace("->", "")
+        i = 0
+        test_data = ""
+        formatted_result = ""
+        for line in result_file:
 
-    # Packer
-    hello.pack()
-    tekst.pack()
+            if line[0] == "=":
+                line = line.strip().replace("=>", "").split(";")
+                test_name = line[0]
+                test_mark = line[1]
+                test_max = line[2]
+                test_data += "Test " + str(test_name) + ", hinne " + str(test_mark) + ", vehemik " + str(
+                    test_max) + "\n"
+                i = 1
+            elif line[0] == "-" and i == 1:
+                formatted_result += course_name + "\n"
+                formatted_result += test_data + "\n"
+                test_data = ""
+
+            if line[0] == "-":
+                course_name = line.strip().replace("->", "")
+                i = 0
+
+        return formatted_result
+
+    result_label = Label(result_window, text=format_data_from_result_file(),
+                         font="Conssolas 10",
+                         fg="#fff",
+                         bg='#8ac5de'
+                         )
+
+    heading.pack()
+    result_label.pack()
 
     result_window.mainloop()
