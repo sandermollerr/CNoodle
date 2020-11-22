@@ -18,6 +18,8 @@ if __name__ == '__main__':
     while True:
         if not is_first_run:
             user_login_window()
+
+        is_first_run = False
         navigate_to_login_page()
 
         user_information = get_user_information()
