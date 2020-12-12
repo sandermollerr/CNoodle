@@ -18,7 +18,7 @@ def open_browser_with_driver():
 
     # Apply options for web driver
     global browser
-    browser = webdriver.Firefox(options=options)  # options=options
+    browser = webdriver.Firefox()  # options=options , executable_path=r"./chromedriver.exe"
     browser.implicitly_wait(5)
     browser.get('https://moodle.ut.ee/login/index.php')
     browser.find_element_by_xpath("//a[@class='btn btn-secondary btn-block']").click()
