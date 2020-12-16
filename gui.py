@@ -130,7 +130,7 @@ def show_compared_results(result_file_name):
     result_window = Tk()
 
     result_window.resizable( width = False, height= False)
-    result_window.geometry('430x600')
+    result_window.geometry('600x600')
     result_window.title('Dima and Sander')
 
     result_window['bg'] = '#8ac5de'
@@ -183,7 +183,7 @@ def show_compared_results(result_file_name):
         return formatted_result
 
     result_label = Text(result_window,
-                        width = 35,
+                        width = 49,
                         height = 20,
                         wrap = WORD,
                         font="Conssolas 13",
@@ -198,10 +198,11 @@ def show_compared_results(result_file_name):
     scroll.pack(side = RIGHT, fill = Y)
 
     result_label.config(yscrollcommand = scroll.set)
-    heading.place(relx = 0.19,
+    heading.place(relx = 0.27,
                   rely = 0.10)
     result_label.place(relx = 0.13,
                        rely = 0.23)
 
     result_window.mainloop()
+
 
