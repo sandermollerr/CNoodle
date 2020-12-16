@@ -80,7 +80,7 @@ def user_login_window():
     root.title('Dima and Sander')
 
     # background image
-    bgImage = PhotoImage(file=r"background4.png")
+    bgImage = PhotoImage(file=r"background_main.png")
     Label(root, image=bgImage).place(relwidth=1, relheight=1)
 
     # background line
@@ -136,7 +136,7 @@ def show_compared_results(result_file_name):
     result_window['bg'] = '#8ac5de'
 
     #background img
-    bgImage = PhotoImage(file=r"background5.png")
+    bgImage = PhotoImage(file=r"background_result.png")
     Label(result_window, image=bgImage).place(relwidth=1, relheight=1)
 
     # background line
