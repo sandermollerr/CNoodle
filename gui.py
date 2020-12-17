@@ -12,22 +12,22 @@ user_information: list
 def pack_all_widgets():
     email_input_label = Label(root, text='Login',
                               font='Comfortaa 20',
-                              fg="#fff",
-                              bg='#8ac5de', )
+                              fg="#696464",
+                              bg='#fff', )
     global email_input
     email_input = Entry(root, font='Consolas 15',
-                        fg="#8ac5de",
+                        fg="#696464",
                         bg='#fff',
                         relief="groove",  # groove,solid,raised ,ridge ,sunken
                         justify='center')
 
     password_input_label = Label(root, text='Password',
                                  font='Comfortaa 20',
-                                 fg='#fff',
-                                 bg='#8ac5de', )
+                                 fg='#696464',
+                                 bg='#fff', )
     global password_input
     password_input = Entry(root, font='Consolas 15',
-                           fg="#8ac5de",
+                           fg="#696464",
                            bg='#fff',
                            relief="groove",  # groove,solid,raised ,ridge ,sunken
                            justify='center',
@@ -36,29 +36,37 @@ def pack_all_widgets():
     remember_login_information = Checkbutton(root, text="Remember login information", variable=IntVar(), onvalue=1,
                                              offvalue=0,
                                              font='Comfortaa 12',
-                                             bg='#8ac5de',
-                                             fg='#c7eeff',
-                                             activebackground='#8ac5de',
+                                             bg='#fff',
+                                             fg='#696464',
+                                             activebackground='#fff',
                                              activeforeground='#fff',
                                              )
     global submit_button
-    submit_button = Button(root, text='Submit',
-                           font='Consolas 13',
+    submit_button = Button(root,
+                           text='SUBMIT',
                            fg='#fff',
-                           bg='#8ac5de',
-                           # relief="solid",
-                           activebackground='#8ac5de',
-                           activeforeground='#fff',
+                           bg='#696464',
+                            activebackground = '#8ac5de',
+                            activeforeground = '#fff'
                            )
-    email_input_label.pack()
-    email_input.pack()
+    email_input_label.place(relx = 0.40,
+                      rely = 0.20)
 
-    password_input_label.pack()
-    password_input.pack()
+    email_input.place(relx = 0.18,
+                      rely = 0.30)
 
-    remember_login_information.pack()
+    password_input_label.place(relx = 0.32,
+                      rely = 0.40)
 
-    submit_button.pack()
+    password_input.place(relx = 0.18,
+                      rely = 0.50)
+
+    remember_login_information.place(relx = 0.17,
+                      rely = 0.60)
+
+    submit_button.place(relx = 0.41,
+                        rely = 0.67,)
+
     # global has_packed_widgets
     # has_packed_widgets = True
 
@@ -67,11 +75,22 @@ def user_login_window():
     # Window settings
     global root
     root = Tk()
-    # root.resizable( width = False, height= False)
-    root.geometry('500x500')
+    root.resizable( width = False, height= False)
+    root.geometry('350x500')
     root.title('Dima and Sander')
-    root.wm_attributes('-alpha', 0.9)
-    root['bg'] = '#8ac5de'
+
+    # background image
+    bgImage = PhotoImage(file=r"background_main.png")
+    Label(root, image=bgImage).place(relwidth=1, relheight=1)
+
+    # background line
+    line = Label(root,
+                 width = 33,
+                 bg = "#fff")
+    line.place(relx = 0.15,
+               relwidth = 0.70,
+               relheight = 1)
+
 
     email, password = "", ""
 
@@ -110,16 +129,28 @@ def show_compared_results(result_file_name):
     # Window settings
     result_window = Tk()
 
-    # root.resizable( width = False, height= False)
-    # root.geometry('250x400')
+    result_window.resizable( width = False, height= False)
+    result_window.geometry('600x600')
     result_window.title('Dima and Sander')
-    result_window.wm_attributes('-alpha', 0.9)
+
     result_window['bg'] = '#8ac5de'
 
-    heading = Label(result_window, text="Hello",
+    #background img
+    bgImage = PhotoImage(file=r"background_result.png")
+    Label(result_window, image=bgImage).place(relwidth=1, relheight=1)
+
+    # background line
+    line = Label(result_window,
+                 width=35,
+                 bg="#fff")
+    line.place(relx=0.125,
+               relwidth=0.75,
+               relheight=1)
+
+    heading = Label(result_window, text="Here is your changes:",
                     font='Comfortaa 20',
-                    fg="#fff",
-                    bg='#8ac5de', )
+                    fg="#696464",
+                    bg='#fff', )
 
     def format_data_from_result_file():
         result_file = open(result_file_name, encoding="utf8")
@@ -129,12 +160,12 @@ def show_compared_results(result_file_name):
         formatted_result = ""
         for line in result_file:
 
-            if line[0] == "=":
+            if line[0] == "=" and line.strip().split(";")[1] != "-":
                 line = line.strip().replace("=>", "").split(";")
                 test_name = line[0]
                 test_mark = line[1]
                 test_max = line[2]
-                test_data += "Test " + str(test_name) + ", hinne " + str(test_mark) + ", vehemik " + str(
+                test_data += "Test " + str(test_name) + ", hinne " + str(test_mark) + ", vahemik " + str(
                     test_max) + "\n"
                 i = 1
             elif line[0] == "-" and i == 1:
@@ -145,16 +176,33 @@ def show_compared_results(result_file_name):
             if line[0] == "-":
                 course_name = line.strip().replace("->", "")
                 i = 0
+        if i == 1:
+            formatted_result += course_name + "\n"
+            formatted_result += test_data + "\n"
 
         return formatted_result
 
-    result_label = Label(result_window, text=format_data_from_result_file(),
-                         font="Conssolas 10",
-                         fg="#fff",
-                         bg='#8ac5de'
-                         )
+    result_label = Text(result_window,
+                        width = 49,
+                        height = 20,
+                        wrap = WORD,
+                        font="Conssolas 13",
+                        fg="#696464",
+                        bg='#fff'
+                        )
 
-    heading.pack()
-    result_label.pack()
+    result_label.insert(0.0, str(format_data_from_result_file()))
+
+    #Scroll wighet
+    scroll = Scrollbar (command = result_label.yview)
+    scroll.pack(side = RIGHT, fill = Y)
+
+    result_label.config(yscrollcommand = scroll.set)
+    heading.place(relx = 0.27,
+                  rely = 0.10)
+    result_label.place(relx = 0.13,
+                       rely = 0.23)
 
     result_window.mainloop()
+
+

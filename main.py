@@ -7,6 +7,8 @@ if __name__ == '__main__':
     webdriver_thread = threading.Thread(target=open_browser_with_driver)
     login_thread = threading.Thread(target=user_login_window)
 
+    print("Getting user input...")
+
     webdriver_thread.start()
     login_thread.start()
 
@@ -17,11 +19,13 @@ if __name__ == '__main__':
 
     while True:
         if not is_first_run:
+            print("Getting user input again...")
             user_login_window()
 
         is_first_run = False
         navigate_to_login_page()
 
+        print("Logging in...")
         user_information = get_user_information()
         status = get_login_status(user_information[0], user_information[1])
 
@@ -31,14 +35,19 @@ if __name__ == '__main__':
         #   invalid password: esctx
 
         if status == "__utmc":
+            print("Logged in!")
             links = get_course_links()
+            print("Reading data...")
             read_data_from_moodle_into_file(links)
             files_history = glob.glob(".\\history\\*.txt")
 
             # Checks if history directory contains previous history files
             if len(files_history) >= 2:
                 # print(files_history)
+
+                print("Comparing data...")
                 compare_files(files_history[-1], files_history[-2])
+
                 show_compared_results("./result/result.txt")
             else:
                 print("All grades synced!")
