@@ -6,6 +6,8 @@ email_input: any
 password_input: any
 submit_button: any
 user_information: list
+
+
 # has_packed_widgets = False
 
 
@@ -46,26 +48,26 @@ def pack_all_widgets():
                            text='SUBMIT',
                            fg='#fff',
                            bg='#696464',
-                            activebackground = '#8ac5de',
-                            activeforeground = '#fff'
+                           activebackground='#8ac5de',
+                           activeforeground='#fff'
                            )
-    email_input_label.place(relx = 0.40,
-                      rely = 0.20)
+    email_input_label.place(relx=0.40,
+                            rely=0.20)
 
-    email_input.place(relx = 0.18,
-                      rely = 0.30)
+    email_input.place(relx=0.18,
+                      rely=0.30)
 
-    password_input_label.place(relx = 0.32,
-                      rely = 0.40)
+    password_input_label.place(relx=0.32,
+                               rely=0.40)
 
-    password_input.place(relx = 0.18,
-                      rely = 0.50)
+    password_input.place(relx=0.18,
+                         rely=0.50)
 
-    remember_login_information.place(relx = 0.17,
-                      rely = 0.60)
+    remember_login_information.place(relx=0.17,
+                                     rely=0.60)
 
-    submit_button.place(relx = 0.41,
-                        rely = 0.67,)
+    submit_button.place(relx=0.41,
+                        rely=0.67, )
 
     # global has_packed_widgets
     # has_packed_widgets = True
@@ -75,7 +77,7 @@ def user_login_window():
     # Window settings
     global root
     root = Tk()
-    root.resizable( width = False, height= False)
+    root.resizable(width=False, height=False)
     root.geometry('350x500')
     root.title('Dima and Sander')
 
@@ -85,12 +87,11 @@ def user_login_window():
 
     # background line
     line = Label(root,
-                 width = 33,
-                 bg = "#fff")
-    line.place(relx = 0.15,
-               relwidth = 0.70,
-               relheight = 1)
-
+                 width=33,
+                 bg="#fff")
+    line.place(relx=0.15,
+               relwidth=0.70,
+               relheight=1)
 
     email, password = "", ""
 
@@ -129,13 +130,13 @@ def show_compared_results(result_file_name):
     # Window settings
     result_window = Tk()
 
-    result_window.resizable( width = False, height= False)
+    result_window.resizable(width=False, height=False)
     result_window.geometry('600x600')
     result_window.title('Dima and Sander')
 
     result_window['bg'] = '#8ac5de'
 
-    #background img
+    # background img
     bgImage = PhotoImage(file=r"background_result.png")
     Label(result_window, image=bgImage).place(relwidth=1, relheight=1)
 
@@ -147,7 +148,7 @@ def show_compared_results(result_file_name):
                relwidth=0.75,
                relheight=1)
 
-    heading = Label(result_window, text="Here is your changes:",
+    heading = Label(result_window, text="Leitud muutused:",
                     font='Comfortaa 20',
                     fg="#696464",
                     bg='#fff', )
@@ -165,7 +166,7 @@ def show_compared_results(result_file_name):
                 test_name = line[0]
                 test_mark = line[1]
                 test_max = line[2]
-                test_data += "Test " + str(test_name) + ", hinne " + str(test_mark) + ", vahemik " + str(
+                test_data += "- " + str(test_name) + ", hinne " + str(test_mark) + ", vahemik " + str(
                     test_max) + "\n"
                 i = 1
             elif line[0] == "-" and i == 1:
@@ -183,9 +184,9 @@ def show_compared_results(result_file_name):
         return formatted_result
 
     result_label = Text(result_window,
-                        width = 49,
-                        height = 20,
-                        wrap = WORD,
+                        width=49,
+                        height=20,
+                        wrap=WORD,
                         font="Conssolas 13",
                         fg="#696464",
                         bg='#fff'
@@ -193,16 +194,14 @@ def show_compared_results(result_file_name):
 
     result_label.insert(0.0, str(format_data_from_result_file()))
 
-    #Scroll wighet
-    scroll = Scrollbar (command = result_label.yview)
-    scroll.pack(side = RIGHT, fill = Y)
+    # Scroll wighet
+    scroll = Scrollbar(command=result_label.yview)
+    scroll.pack(side=RIGHT, fill=Y)
 
-    result_label.config(yscrollcommand = scroll.set)
-    heading.place(relx = 0.27,
-                  rely = 0.10)
-    result_label.place(relx = 0.13,
-                       rely = 0.23)
+    result_label.config(yscrollcommand=scroll.set)
+    heading.place(relx=0.27,
+                  rely=0.10)
+    result_label.place(relx=0.13,
+                       rely=0.23)
 
     result_window.mainloop()
-
-
