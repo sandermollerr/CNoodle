@@ -38,7 +38,7 @@ if __name__ == '__main__':
             # Checks if history directory contains previous history files
             if len(files_history) >= 2:
                 # print(files_history)
-                compare_files(files_history[-1], files_history[0])
+                compare_files(files_history[-1], files_history[-2])
                 show_compared_results("./result/result.txt")
             else:
                 print("All grades synced!")
