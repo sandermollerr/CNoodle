@@ -18,7 +18,7 @@ def open_browser_with_driver():
 
     # Apply options for web driver
     global browser
-    browser = webdriver.Firefox()  # options=options , executable_path=r"./chromedriver.exe"
+    browser = webdriver.Firefox(options=options)  # options=options , executable_path=r"./chromedriver.exe"
     browser.implicitly_wait(5)
     browser.get('https://moodle.ut.ee/login/index.php')
     browser.find_element_by_xpath("//a[@class='btn btn-secondary btn-block']").click()
@@ -140,6 +140,10 @@ def compare_files(newer_file, older_file):
 
             course_name_new = ""
             course_name_old = ""
+
+            previous_title = ""
+            previous_title_count = 0
+
             for new_value in new_data:
                 # Checks if dealing with course heading
                 if new_value[:2] == "->":
@@ -149,11 +153,23 @@ def compare_files(newer_file, older_file):
                     continue
                 new_value_data = new_value.strip().split(";")
                 new_title, new_result, new_result_range = new_value_data[0], new_value_data[1], new_value_data[2]
+
+                if new_title == previous_title:
+                    previous_title_count += 1
+                else:
+                    previous_title_count = 0
+                previous_title = new_title
+
+                skip_row_count = previous_title_count
+
                 found_new_title = False
                 for old_value in old_data:
+                    # Checks if dealing with a course name and if so remembers it and continues to next line
                     if old_value[:2] == "->":
                         course_name_old = old_value.strip()
                         continue
+
+
 
                     # Statement prevents comparing tests with same name from different courses
                     if course_name_old == course_name_new:
@@ -161,6 +177,10 @@ def compare_files(newer_file, older_file):
                         old_title, old_result, old_result_range = old_value_data[0], old_value_data[1], old_value_data[
                             2]
                         if new_title == old_title:
+                            if skip_row_count > 0:
+                                skip_row_count -= 1
+                                continue
+
                             found_new_title = True
                             if new_result != old_result:
                                 print("{};{};{}".format(new_title, new_result, old_result))
